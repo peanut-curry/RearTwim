@@ -1,6 +1,6 @@
 # RearTwim
 ----
-TWIM = Travel WIth Map,  
-       Travel WIth ME,  
-       _TWIM!_
+Travel WIth Map,  
+Travel WIth ME,  
+_TWIM!_
 ----
