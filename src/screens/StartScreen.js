@@ -2,7 +2,11 @@ import React, { Component } from 'react';
 import { AppRegistry, Image, TouchableOpacity, View } from 'react-native';
 
 export default class MainScreen extends Component {
-    //callFun = () => {this.props.navigation.navigate('Login');}
+    static navigationOptions = {
+        header: null,
+    };
+
+    callFun = () => {this.props.navigation.navigate('Login');}
 
     render() {
         return (
