@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Image, Button, Text } from 'react-native-elements';
-import { View, StyleSheet, Animated } from 'react-native';
+import { Image, Button, Divider } from 'react-native-elements';
+import { View, StyleSheet, Text } from 'react-native';
+import TextInput from '../components/TextInput';
 
 export default class LoginScreen extends Component{
     static navigationOptions = {
@@ -11,23 +12,29 @@ export default class LoginScreen extends Component{
         return(
             <View style={loginStyles.container}>
                 <View style={loginStyles.topContainer}></View>
-                <View style={loginStyles.mainContainer}>
-                    <Image source={require('../assets/LOGO.png')}
-                        style={{ width: 80, height:85, alignSelf:'center', marginBottom:10 }}
-                    ></Image>
-                    <Text style={loginStyles.text}>
-                        Travel with map,{"\n"}
-                        Travel with me,{"\n"}
-                        Twim
-                    </Text>
+                <View style={loginStyles.topContainer}>
+                <Image source={require('../assets/LOGO.png')}
+                        style={{ width: 80, height:85, alignSelf:'center', marginBottom:10 }}></Image>
                 </View>
-                <View style={loginStyles.mainContainer}>
+
+                <View style={loginStyles.loginTwimContainer}>
+                    <TextInput placeholder='Email Address'
+                        iconSrc={require('../assets/mail.png')} ></TextInput>
+                    <TextInput placeholder='Password' 
+                        iconSrc={require('../assets/lock.png')}></TextInput>
+                    <Button title="Log in with Twim" titleStyle={loginStyles.buttonText}
+                        buttonStyle={loginStyles.twimLoginButton}></Button>
+                    <View style={{flexDirection:"row"}} alignSelf='center' justifyContent='center'>
+                        <Text style={loginStyles.smallText} >Sign up</Text>
+                        <Text style={loginStyles.smallText} >Forgot password?</Text>
+                    </View>
+                </View>
+                
+                <View style={loginStyles.loginNaverContainer}>
+                    <Divider style={{ backgroundColor: '#DEDEDE', height: 1.5 }} />
                     <Button title="Log in with Naver"
                         buttonStyle={loginStyles.naverLoginButton}></Button>
-                    <Button title="Log in with Twim" 
-                        buttonStyle={loginStyles.twimLoginButton}></Button>
                 </View>
-                <View style={loginStyles.bottomContainer}></View>
             </View>
         );
     }
@@ -39,34 +46,40 @@ const loginStyles = StyleSheet.create({
         backgroundColor: 'white'
     },
     topContainer:{
-        flex:2,
+        flex:1,
         backgroundColor: 'white'
     },
-    mainContainer:{
-        flex: 4,
+    loginTwimContainer:{
+        flex: 2.7,
         backgroundColor: 'white',
-        justifyContent:'center'
+        justifyContent:'center',
+        marginHorizontal: '5%'
     },
-    bottomContainer:{
-        flex:1,
+    loginNaverContainer:{
+        flex: 1.3,
         backgroundColor: 'white',
+        justifyContent:'flex-start',
+        marginHorizontal: '5%'
     },
     naverLoginButton:{
-        marginHorizontal: '8%',
-        marginVertical: 10,
+        marginHorizontal: '12%',
         backgroundColor: '#2DB400',
+        marginTop: 15,
         borderRadius : 90
     },
     twimLoginButton:{
-        marginHorizontal: '8%',
-        marginVertical: 10,
+        marginHorizontal: '12%',
+        marginVertical: 15,
         backgroundColor: '#23C3B8',
         borderRadius : 90
     },
-    text:{
-        alignSelf:'center',
-        color: '#303030',
-        textAlign: 'center',
-        fontSize: 20
+    smallText:{
+        textDecorationLine: 'underline',
+        color: '#AEABAB', 
+        marginHorizontal: '4%',
+        marginVertical: '1%'
+    },
+    buttonText:{
+        fontSize: 18
     }
 })
