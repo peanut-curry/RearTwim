@@ -4,7 +4,7 @@ import { Button, ThemeProvider } from 'react-native-elements';
 export default class LoginScreen extends Components{
     render(){
         <ThemeProvider>
-            <Button title="Hey!" />
+            <Button title="LoginScreen입니다." />
         </ThemeProvider>
     }
 }
