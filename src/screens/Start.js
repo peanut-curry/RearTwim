@@ -3,6 +3,12 @@ import StartScreen from './StartScreen';
 import LoginScreen from './LoginScreen';
 import MainScreen from './MainScreen';
 import { createStackNavigator, createAppContainer } from "react-navigation";
+import LinearGradient from 'react-native-linear-gradient';
+import { StatusBar, Dimensions } from 'react-native';
+
+var StatusBarHeight = StatusBar.currentHeight;
+var {height, width} = Dimensions.get('window');
+var HeaderHeight = height/9.0;
 
 const AppNavigator = createStackNavigator(
   {
@@ -11,7 +17,21 @@ const AppNavigator = createStackNavigator(
     Main: MainScreen
   },
   {
-    initialRouteName: "Home"
+    initialRouteName: "Home",
+    defaultNavigationOptions: {
+      headerStyle: {
+        backgroundColor: '#FCEB50',
+        paddingTop: StatusBarHeight,
+        height: HeaderHeight
+      },
+      headerBackground: (
+        <LinearGradient
+          colors={['#FCEB50', '#EF4058']}
+          style={{ flex: 1 }}
+          start={{x: 0, y: 0}}
+          end={{x: 0, y: 1}}>
+          </LinearGradient>)
+    }
   }
 );
 
