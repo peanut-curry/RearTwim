@@ -1,39 +1,39 @@
 import React, { Component } from 'react';
-import { Image, Button, Divider } from 'react-native-elements';
-import { View, StyleSheet, Text } from 'react-native';
-import TextInput from '../components/TextInput';
+import { Image, Button } from 'react-native-elements';
+import { View, StyleSheet, Text, StatusBar, Dimensions } from 'react-native';
 
 export default class LoginScreen extends Component{
     static navigationOptions = {
         header: null,
     };
 
+    naverLoginClicked = () => {
+        //네이버 로그인 코드 넣기
+        this.props.navigation.navigate('Main');
+    }
+    googleLoginClicked = () => {
+        //구글 로그인 코드 넣기
+        this.props.navigation.navigate('Main');
+    }
+
     render(){
+        var {height, width} = Dimensions.get('window');
+        var iconSize = width/4.0;
+        var textMargin = iconSize/6.0;
+        var buttonWidth = width/3.0*2.2;
         return(
             <View style={loginStyles.container}>
+                <StatusBar backgroundColor="white" barStyle="dark-content" hidden={false}/>
                 <View style={loginStyles.topContainer}></View>
-                <View style={loginStyles.topContainer}>
-                <Image source={require('../assets/LOGO.png')}
-                        style={{ width: 80, height:85, alignSelf:'center', marginBottom:10 }}></Image>
+                <View style={loginStyles.middleContainer}>
+                    <Image style={{width:iconSize, height:iconSize}} source={require('../assets/logo.png')}></Image>
+                    <Text style={{textAlign:'center', fontSize:20, textAlignVertical:'center', marginTop:textMargin}}>Travel with map,{'\n'}Travel with me,{'\n'}twim!</Text>
                 </View>
-
-                <View style={loginStyles.loginTwimContainer}>
-                    <TextInput placeholder='Email Address'
-                        iconSrc={require('../assets/mail.png')} ></TextInput>
-                    <TextInput placeholder='Password' 
-                        iconSrc={require('../assets/lock.png')}></TextInput>
-                    <Button title="Log in with Twim" titleStyle={loginStyles.buttonText}
-                        buttonStyle={loginStyles.twimLoginButton}></Button>
-                    <View style={{flexDirection:"row"}} alignSelf='center' justifyContent='center'>
-                        <Text style={loginStyles.smallText} >Sign up</Text>
-                        <Text style={loginStyles.smallText} >Forgot password?</Text>
-                    </View>
-                </View>
-                
-                <View style={loginStyles.loginNaverContainer}>
-                    <Divider style={{ backgroundColor: '#DEDEDE', height: 1.5 }} />
-                    <Button title="Log in with Naver"
-                        buttonStyle={loginStyles.naverLoginButton}></Button>
+                <View style={loginStyles.bottomContainer}>
+                    <Button buttonStyle={loginStyles.naverLoginButton} containerStyle={{width:buttonWidth, marginBottom:textMargin}}
+                        title="네이버로 로그인하기" onPress={this.naverLoginClicked}></Button>
+                    <Button buttonStyle={loginStyles.googleLoginButton} containerStyle={{width:buttonWidth}}
+                        title="Google로 로그인하기" onPress={this.googleLoginClicked}></Button>
                 </View>
             </View>
         );
@@ -49,37 +49,24 @@ const loginStyles = StyleSheet.create({
         flex:1,
         backgroundColor: 'white'
     },
-    loginTwimContainer:{
-        flex: 2.7,
+    middleContainer:{
+        flex:2,
         backgroundColor: 'white',
-        justifyContent:'center',
-        marginHorizontal: '5%'
+        justifyContent: 'center',
+        alignItems: 'center'
     },
-    loginNaverContainer:{
-        flex: 1.3,
-        backgroundColor: 'white',
-        justifyContent:'flex-start',
-        marginHorizontal: '5%'
+    bottomContainer:{
+        flex:2.5,
+        backgroundColor:'white',
+        justifyContent: 'center',
+        alignItems:'center'
     },
     naverLoginButton:{
-        marginHorizontal: '12%',
         backgroundColor: '#2DB400',
-        marginTop: 15,
-        borderRadius : 90
+        borderRadius : 90,
     },
-    twimLoginButton:{
-        marginHorizontal: '12%',
-        marginVertical: 15,
+    googleLoginButton:{
         backgroundColor: '#23C3B8',
         borderRadius : 90
-    },
-    smallText:{
-        textDecorationLine: 'underline',
-        color: '#AEABAB', 
-        marginHorizontal: '4%',
-        marginVertical: '1%'
-    },
-    buttonText:{
-        fontSize: 18
     }
 })
