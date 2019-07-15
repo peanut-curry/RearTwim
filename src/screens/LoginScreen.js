@@ -11,8 +11,8 @@ export default class LoginScreen extends Component{
 
     naverLoginClicked = () => {
         //네이버 로그인 코드 넣기
-        ToastAndroid.show("네이버 로그인은 준비중", ToastAndroid.SHORT);
-        //this.props.navigation.navigate('Main');
+        //ToastAndroid.show("네이버 로그인은 준비중", ToastAndroid.SHORT);
+        this.props.navigation.navigate('Main');
     }
 
     googleLoginClicked = async() => {

@@ -13,6 +13,7 @@ import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
 import io.invertase.firebase.RNFirebasePackage;
 import io.invertase.firebase.auth.RNFirebaseAuthPackage;
+import com.airbnb.android.react.maps.MapsPackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -34,7 +35,8 @@ public class MainApplication extends Application implements ReactApplication {
             new VectorIconsPackage(),
             new RNGestureHandlerPackage(),
               new RNFirebasePackage(),
-              new RNFirebaseAuthPackage()
+              new RNFirebaseAuthPackage(),
+              new MapsPackage()
       );
     }
 
