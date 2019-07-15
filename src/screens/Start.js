@@ -2,6 +2,9 @@ import React, {Component} from 'react';
 import StartScreen from './StartScreen';
 import LoginScreen from './LoginScreen';
 import MainScreen from './MainScreen';
+import StartTripScreen from './StartTripScreen';
+import EndTripScreen from './EndTripScreen';
+import WriteTripScreen from './WriteTripScreen';
 import { createStackNavigator, createAppContainer } from "react-navigation";
 import LinearGradient from 'react-native-linear-gradient';
 import { StatusBar, Dimensions } from 'react-native';
@@ -14,7 +17,10 @@ const AppNavigator = createStackNavigator(
   {
     Home: StartScreen,
     Login: LoginScreen,
-    Main: MainScreen
+    Main: MainScreen,
+    StartTrip: StartTripScreen,
+    EndTrip: EndTripScreen,
+    WriteTrip: WriteTripScreen
   },
   {
     initialRouteName: "Home",
