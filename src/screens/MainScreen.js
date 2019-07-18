@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, StatusBar, View, Image, TouchableOpacity, Dimensions, PermissionsAndroid } from 'react-native';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
+import ActionButton from 'react-native-action-button';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 export default class MainScreen extends Component{
     componentDidMount() {
@@ -43,11 +45,21 @@ export default class MainScreen extends Component{
                         latitude: 37.78825,
                         longitude: -122.4324,
                         latitudeDelta: 0.0922,
-                        longitudeDelta: 0.0421,}}/>
+                        longitudeDelta: 0.0421,
+                    }} />
+
+                    <ActionButton buttonColor="rgba(156,39,176,100)">     
+                        <ActionButton.Item buttonColor='#1abc9c' title="여행 시작!" onPress={() => { }}>
+                            <Icon src="../assets/map.svg" style={styles.actionButtonIcon} />
+                        </ActionButton.Item>
+                </ActionButton>
+
+               
             </View>
         );
     }
 }
+
 
 const MainStyles = StyleSheet.create({
     container:{
@@ -57,3 +69,11 @@ const MainStyles = StyleSheet.create({
         flex:1
     }
 });
+
+const styles = StyleSheet.create({
+    actionButtonIcon: {
+        fontSize: 20,
+        height: 22,
+        color: 'white',
+    },
+});      
