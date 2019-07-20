@@ -5,7 +5,6 @@ export default class StartTripScreen extends Component{
     static navigationOptions = {
         title: '여행 시작',
       };
-    
 
     render(){
         return(

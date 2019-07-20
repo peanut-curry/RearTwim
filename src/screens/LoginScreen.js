@@ -10,6 +10,10 @@ export default class LoginScreen extends Component{
         header: null,
     };
 
+    tempLogin = () => {
+        this.props.navigation.navigate('Main');
+    }
+
     googleLoginClicked = async() => {
         try {
             //로그인 로딩 컴포넌트 띄우기  
@@ -71,6 +75,7 @@ export default class LoginScreen extends Component{
                     <Text style={{textAlign:'center', fontSize:20, textAlignVertical:'center', marginTop:textMargin}}>Travel with map,{'\n'}Travel with me,{'\n'}twim!</Text>
                 </View>
                 <View style={loginStyles.bottomContainer}>
+                    <Button title="로그인안하고 Main으로" onPress={this.tempLogin}></Button>
                     <Button buttonStyle={loginStyles.googleLoginButton} containerStyle={{width:buttonWidth}}
                         title="Google로 로그인하기" onPress={this.googleLoginClicked}></Button>
                 </View>
