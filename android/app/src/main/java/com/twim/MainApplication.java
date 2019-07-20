@@ -3,6 +3,7 @@ package com.twim;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import org.pgsqlite.SQLitePluginPackage;
 import co.apptailor.googlesignin.RNGoogleSigninPackage;
 import com.BV.LinearGradient.LinearGradientPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
@@ -30,6 +31,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new SQLitePluginPackage(),
             new RNGoogleSigninPackage(),
             new LinearGradientPackage(),
             new VectorIconsPackage(),
