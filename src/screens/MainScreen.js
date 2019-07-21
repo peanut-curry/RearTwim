@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import { StyleSheet, StatusBar, View, Image, TouchableOpacity, Dimensions, 
-    AsyncStorage, ToastAndroid } from 'react-native';
+    AsyncStorage, ToastAndroid, Modal, TextInput } from 'react-native';
+import { Button } from 'react-native-elements';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import ActionButton from 'react-native-action-button';
 import Icon from 'react-native-vector-icons/Ionicons';
+import CurrentTimeComponent from '../components/currentTime';
+import GradientButton from '../components/gradientButton';
 
 const {height, width} = Dimensions.get('window');
 const floatheight = height/4.0;
@@ -14,8 +17,18 @@ export default class MainScreen extends Component{
         this.state = {
             isLoading: true,
             isTraveling: false,
-            region : []
+            region : [],
+            modalVisible: false,
         }
+    }
+
+    modalVisibleToggle = () => {
+        this.setState({
+            isLoading: this.state.isLoading,
+            isTraveling: this.state.isTraveling,
+            region : this.state.region,
+            modalVisible: !(this.state.modalVisible),
+        })
     }
 
     goToCurLocation = () => {
@@ -31,7 +44,8 @@ export default class MainScreen extends Component{
                         longitude: currentLongitude,
                         latitudeDelta: 0.0922,
                         longitudeDelta: 0.0421,
-                    }
+                    },
+                    modalVisible: this.state.modalVisible
                 })
             }, 
             (error) => {
@@ -60,7 +74,8 @@ export default class MainScreen extends Component{
                             longitude: currentLongitude,
                             latitudeDelta: 0.0922,
                             longitudeDelta: 0.0421,
-                        }
+                        },
+                        modalVisible: this.state.modalVisible
                     })
                 }, 
                 (error) => {
@@ -72,7 +87,7 @@ export default class MainScreen extends Component{
     }
 
     startTripButtonClicked = () => {
-        this.props.navigation.navigate('StartTrip');
+        this.modalVisibleToggle();
     }
 
     writeTripButtonClicked = () => {
@@ -93,6 +108,10 @@ export default class MainScreen extends Component{
             )
         };
       };
+
+    dialogBackButtonClicked = () => {
+
+    }
       
 
     render(){
@@ -141,6 +160,25 @@ export default class MainScreen extends Component{
                                     <Icon src="../assets/map.svg" style={MainStyles.actionButtonIcon} />
                                 </ActionButton.Item>
                             </ActionButton>
+                            <Modal style={MainStyles.tripStartModal} visible={this.state.modalVisible} animationType="slide" transparent={true} >
+                                <View style={{width:width, height:height, alignItems:'center', justifyContent:'center', backgroundColor:'rgba(0,0,0,0.7)'}}>
+                                    <View style={MainStyles.tripStartDialog}>
+                                        <View style={{flex:0.5, justifyContent:'center'}}>
+                                            <TouchableOpacity onPress={this.modalVisibleToggle}>
+                                                <Image style={{width:25, height:25}} source={require('../assets/back_x.png')}></Image>
+                                            </TouchableOpacity>
+                                        </View>
+                                        <View style={{flex:0.7, justifyContent:'center'}}>
+                                            <CurrentTimeComponent textSize={15}></CurrentTimeComponent>
+                                            <TextInput placeholder='여행 이름' style={{width:180, height:50, textAlign:'center'}} 
+                                            underlineColorAndroid='#B5B5B5'></TextInput>
+                                        </View>
+                                        <View style={{flex:0.5, justifyContent:'flex-start'}}>
+                                            <GradientButton title='여행시작' textSize={15} width={100} height={35}></GradientButton>
+                                        </View>
+                                    </View>
+                                </View>
+                            </Modal>
                     </View>
                 );
             }
@@ -173,6 +211,20 @@ const MainStyles = StyleSheet.create({
         right: 37.5,
         alignItems: 'flex-end',
         justifyContent: 'flex-end'
+    },
+    tripStartModal:{
+        width:floatheight,
+        height:floatheight,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    tripStartDialog:{
+        backgroundColor: 'white',
+        borderRadius: 10,
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: 250,
+        height: 220,
     }
 });
   
