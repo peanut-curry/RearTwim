@@ -4,11 +4,18 @@ import { StyleSheet, StatusBar, View, Image, TouchableOpacity, Dimensions,
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import ActionButton from 'react-native-action-button';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { DrawerAction } from 'react-navigation';
 
 const {height, width} = Dimensions.get('window');
 const floatheight = height/4.0;
 
 export default class MainScreen extends Component{
+    static navigationOptions = {
+        drawerLabel: 'Home',
+        drawerIcon: () => (
+            <Image source={require('../assets/home.png')} />
+        ),
+    }
     constructor(){
         super();
         this.state = {
@@ -86,9 +93,12 @@ export default class MainScreen extends Component{
     static navigationOptions = ({ navigation }) => {
         var iconSize = ((height/9.0)-StatusBar.currentHeight)*0.6;
         return {
-            headerLeft:(
-                <TouchableOpacity style={{justifyContent:'center', width:iconSize, height:iconSize, marginLeft:(iconSize/2.0)}}>
-                    <Image style={{width:iconSize, height:iconSize}} source={require('../assets/menuIcon.png')}></Image>
+            headerLeft: (
+                <TouchableOpacity onPress={() => this.props.navigation.dispatch(DrawerAction.openDrawer())}
+                    style={{ justifyContent: 'center', width: iconSize, height: iconSize, marginLeft: (iconSize / 2.0) }}>
+                    <Image style={{ width: iconSize, height: iconSize }}
+                    source={require('../assets/menuIcon.png')}>
+                    </Image>
                 </TouchableOpacity>
             )
         };
