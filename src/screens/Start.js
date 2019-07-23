@@ -9,7 +9,7 @@ import { createStackNavigator, createAppContainer } from "react-navigation";
 import LinearGradient from 'react-native-linear-gradient';
 import { StatusBar, Dimensions } from 'react-native';
 import { GoogleSignin } from 'react-native-google-signin';
-import DrawerNavigator from './DrawerNavigator';
+//import DrawerNavigator from './DrawerNavigator';
 
 var StatusBarHeight = StatusBar.currentHeight;
 var {height, width} = Dimensions.get('window');
@@ -76,7 +76,7 @@ export default class App extends React.Component {
       }
       );
       const AppContainer = createAppContainer(AppNavigator);
-      return (<AppContainer />, <DrawerNavigator/>);
+      return (<AppContainer />/*, <DrawerNavigator/>*/);
     }
   }
 }

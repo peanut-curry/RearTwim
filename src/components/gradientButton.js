@@ -4,7 +4,7 @@ import LinearGradient from 'react-native-linear-gradient';
 
 export default class TwimGradientButton extends Component{
     static defaultProps = {
-        onPress: null,
+        onPress: ()=>{},
         title: 'button',
         textColor: 'black',
         width: 150,
@@ -19,7 +19,7 @@ export default class TwimGradientButton extends Component{
 
     render(){
         return(
-            <TouchableOpacity style={{
+            <TouchableOpacity onPress={this.props.onPress} style={{
                 borderRadius: this.props.borderRadius, width: this.props.width, height: this.props.height}}>
                 <LinearGradient style={{
                    borderRadius: this.props.borderRadius, alignItems:'center', justifyContent:'center',

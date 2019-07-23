@@ -1,19 +1,21 @@
 import React, { Component } from 'react';
 import { StyleSheet, StatusBar, View, Image, TouchableOpacity, Dimensions, 
     AsyncStorage, ToastAndroid, Modal, TextInput } from 'react-native';
-import { Button } from 'react-native-elements';
+import SQLite from 'react-native-sqlite-storage';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import ActionButton from 'react-native-action-button';
 import Icon from 'react-native-vector-icons/Ionicons';
-<<<<<<< HEAD
 import CurrentTimeComponent from '../components/currentTime';
 import GradientButton from '../components/gradientButton';
-=======
 import { DrawerAction } from 'react-navigation';
->>>>>>> 1e8d686447fd286dd56c196e0d15f2d354fd330e
+
+SQLite.DEBUG(true);
+SQLite.enablePromise(false);
 
 const {height, width} = Dimensions.get('window');
 const floatheight = height/4.0;
+var tripName = "";
+const UserDB = null;
 
 export default class MainScreen extends Component{
     static navigationOptions = {
@@ -38,6 +40,15 @@ export default class MainScreen extends Component{
             isTraveling: this.state.isTraveling,
             region : this.state.region,
             modalVisible: !(this.state.modalVisible),
+        })
+    }
+
+    isTravelingToggle = () => {
+        this.setState({
+            isLoading: this.state.isLoading,
+            isTraveling: !(this.state.isTraveling),
+            region : this.state.region,
+            modalVisible: (this.state.modalVisible),
         })
     }
 
@@ -66,7 +77,7 @@ export default class MainScreen extends Component{
     }
 
     componentDidMount = async() => {
-        var isTraveling = await AsyncStorage.getItem("isTraveling'");
+        var isTraveling = await AsyncStorage.getItem("isTraveling");
         if (isTraveling=='true'){ //여행중인 경우
             //최근 일지 가져와서 State에 넣기.
         } 
@@ -122,8 +133,45 @@ export default class MainScreen extends Component{
         };
       };
 
-    dialogBackButtonClicked = () => {
+    startTrip = async() => {
+        var tripNum = -1;
+        var MyUserDB = SQLite.openDatabase({name: "UserData.db", createFromLocation : 1},this.openCB,this.errorCB);
+        MyUserDB.transaction((UserDB)=>{
+            UserDB.executeSql('INSERT INTO 여행(여행이름, 종료여부, 여행번호) VALUES (?, 0, NULL);', [tripName],
+            (UserDB, results) => {
+                   tripNum=results.insertId
+                    UserDB.executeSql('INSERT INTO 일지(여행번호, 일지번호, 위도, 경도) VALUES (?, 0, ?, ?);', 
+                    [tripNum, this.state.region.latitude, this.state.region.latitude],
+                        async(UserDB, results) => {
+                            await AsyncStorage.setItem("isTraveling", "true"); //여행중 상태로 설정
+                            await AsyncStorage.setItem("lastTripNum", tripNum+'');
+                            this.setState({
+                                isLoading: this.state.isLoading,
+                                isTraveling: true,
+                                region : this.state.region,
+                                modalVisible: false,
+                            })
+                            setTimeout(()=>{MyUserDB.close(this.closeCB, this.errorCB);}, 5000);
+                        }, this.errorCB);
+            }, this.errorCB);
+        });
+    }
 
+    closeCB(err){
+        console.log("closeDB");
+    }
+
+    errorCB(err) {
+        console.log("SQL Error: " + err + JSON.stringify(err));
+        ToastAndroid.show("문제가 발생했습니다. 다시 시도해주세요", ToastAndroid.SHORT);
+    }
+
+    successCB() {
+        console.log("SQL executed fine");
+    }
+      
+    openCB() {
+        console.log("Database OPENED");
     }
       
 
@@ -184,10 +232,11 @@ export default class MainScreen extends Component{
                                         <View style={{flex:0.7, justifyContent:'center'}}>
                                             <CurrentTimeComponent textSize={15}></CurrentTimeComponent>
                                             <TextInput placeholder='여행 이름' style={{width:180, height:50, textAlign:'center'}} 
-                                            underlineColorAndroid='#B5B5B5'></TextInput>
+                                            underlineColorAndroid='#B5B5B5' onChangeText={(text)=>{tripName=text;}}></TextInput>
                                         </View>
                                         <View style={{flex:0.5, justifyContent:'flex-start'}}>
-                                            <GradientButton title='여행시작' textSize={15} width={100} height={35}></GradientButton>
+                                            <GradientButton title='여행시작' textSize={15} width={100} height={35}
+                                                onPress={this.startTrip}></GradientButton>
                                         </View>
                                     </View>
                                 </View>
